@@ -51,6 +51,7 @@ function createDivsForColors(colorArray) {
     // give it a class attribute for the value we are looping over
     newDiv.classList.add(color);
     newDiv.id = (uniqueId)
+    newDiv.style.backgroundColor = color
 
     // call a function handleCardClick when a div is clicked on
     newDiv.addEventListener("click", handleCardClick);
@@ -60,57 +61,64 @@ function createDivsForColors(colorArray) {
 }
 
 // TODO: Implement this function!
-function handleCardClick(event) {
-let colorOne = undefined;
-let idOne = undefined;
-let colorTwo = undefined;
-let idTwo = undefined;
-turnedOver ++
+function handleCardClick(e) {
+ if (sessionStorage.length < 3){
+    // sessionStorage.setItem('targetOne', JSON.stringify(e.target))
+    sessionStorage.setItem('colorOne', JSON.stringify(e.target.getAttribute('class')));
+    sessionStorage.setItem  ('idOne', JSON.stringify(e.target.getAttribute('id')));
 
-
-
-
-    if (turnedOver <= 2) {
-        setTimeout(function(){
-            event.target.style.backgroundColor = 'white'
-            }, 2000) 
-        
-        event.target.style.backgroundColor = event.target.getAttribute('class');
-            if (turnedOver === 1) {
-                let first = event.target
-                colorOne = event.target.getAttribute('class')
-                idOne = event.target.getAttribute('Id')
-            } else if (turnedOver === 2) {
-                let second = event.target
-                colorTwo = event.target.getAttribute('class')
-                idTwo = event.target.getAttribute('Id') 
-            } 
-            console.log(first)
-            console.log(second)
-            
-            // if (pickOne.color !== pickTwo.color || pickOne.id === pickTwo.id){
-            //     setTimeout(function(){
-            //         event.target.style.backgroundColor = 'white'
-            //         }, 2000)
-            // } else if (pickOne.color === pickTwo.color && pickOne.id === pickTwo.id){
-            //     event.target.style.backgroundColor = event.target.getAttribute('class')
-            // }
-            console.log(turnedOver)
-            // console.log(colorOne)
-            // console.log(idOne)
-            // console.log(colorTwo)
-            // console.log(idTwo)
-            // colorOne = '';
-            // idOne = '';
-            // colorTwo = '';
-            // idTwo = '';
+} else if (sessionStorage.length > 3 < 5) {
+    // sessionStorage.setItem('targetTwo', JSON.stringify(e.target))
+    sessionStorage.setItem('colorTwo', JSON.stringify(e.target.getAttribute('class')));
+    sessionStorage.setItem('idTwo', JSON.stringify(e.target.getAttribute('id')));
+        if (sessionStorage.getItem('colorOne') !== sessionStorage.getItem('colorTwo') || sessionStorage.getItem('idOne') == sessionStorage.getItem('idTwo')){
+            // setTimeout(function{
+            //     e.target
+            // })
             
         }
-        
-        
-       
+   
 }
 
+
+console.log(sessionStorage)
+console.log(sessionStorage.length)
+
+}
+
+
+// sessionStorage.clear();
+// localStorage.setItem('pairs',JSON.stringify(data));
+
+// let localStorageLength = JSON.parse(localStorage.getItem('toDoList')).length
+
+// if (((JSON.parse(localStorage.getItem('toDoList'))[k]) === check)) {
+//     let updated = data.indexOf((JSON.parse(localStorage.getItem('toDoList'))[k]))
+//     data.splice(updated,1)
+//     localStorage.setItem('toDoList',JSON.stringify(data))    
+// }
+
+// if (turnedOver <= 2) {
+//     setTimeout(function(){
+//         event.target.style.backgroundColor = 'white'
+//         }, 2000) 
+    
+//     event.target.style.backgroundColor = event.target.getAttribute('class');
+//         if (turnedOver === 1) {
+//             let first = event.target
+//             colorOne = event.target.getAttribute('class')
+//             idOne = event.target.getAttribute('Id')
+//         } else if (turnedOver === 2) {
+//             let second = event.target
+//             colorTwo = event.target.getAttribute('class')
+//             idTwo = event.target.getAttribute('Id') 
+//         } 
+//         console.log(first)
+//         console.log(second)
+        
+       
+        
+//     }
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
