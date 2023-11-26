@@ -60,38 +60,38 @@ function createDivsForColors(colorArray) {
     gameContainer.append(newDiv);
   }
 }
+ let picks = {};
 
 // TODO: Implement this function!
 function handleCardClick(e) {
-    // using session storage to track attributes of card turned over
-    // have to reset session storage after length of 5 
+    e.target.style.backgroundColor = e.target.getAttribute('class')
+    console.log(e.target.getAttribute('class'))
+    
+ if (Object.keys(picks).length == 0){
+    picks.colorOne = (e.target.getAttribute('class'))
+    picks.idOne = (e.target.getAttribute('id'))
+} else if (Object.keys(picks).length > 2 <5) {
+    picks.colorTwo = (e.target.getAttribute('class'))
+    picks.idTwo = (e.target.getAttribute('id'))
+    let first =  document.getElementById(picks.idOne);
+    let second = document.getElementById(picks.idTwo)
 
- if (sessionStorage.length < 3){
-    sessionStorage.setItem('colorOne', JSON.stringify(e.target.getAttribute('class')));
-    sessionStorage.setItem  ('idOne', JSON.stringify(e.target.getAttribute('id')));
-
-} else if (sessionStorage.length > 3 < 5) {
-    // sessionStorage.setItem('targetTwo', JSON.stringify(e.target))
-    sessionStorage.setItem('colorTwo', JSON.stringify(e.target.getAttribute('class')));
-    sessionStorage.setItem('idTwo', JSON.stringify(e.target.getAttribute('id')));
-    let first =  document.getElementById(one);
-    let second = document.getElementById(sessionStorage.getItem('idTwo'))
-
-        if (sessionStorage.getItem('colorOne') !== sessionStorage.getItem('colorTwo') || sessionStorage.getItem('idOne') == sessionStorage.getItem('idTwo')){
+        if (picks.colorOne !== picks.colorTwo || picks.idOne == picks.idTwo){
             setTimeout(function(){
-                first.style.backgroundColor = (sessionStorage.getItem('colorOne'))
-                second.style.backgroundColor = (sessionStorage.getItem('colorTwo'))
+                first.style.backgroundColor = 'white'
+                second.style.backgroundColor = 'white'
             }, 1000)
               
-        } else if ((sessionStorage.getItem('colorOne') == sessionStorage.getItem('colorTwo') && sessionStorage.getItem('idOne') != sessionStorage.getItem('idTwo'))) {
-            // does not work, having trouble selecting DOM element using dymanic id#
-           first.style.backgroundColor = (sessionStorage.getItem('colorOne'))
-            second.style.backgroundColor = (sessionStorage.getItem('colorTwo'))
+        } else if (picks.colorOne == picks.     colorTwo && picks.idOne != picks.idTwo) {
+           first.style.backgroundColor = picks.colorOne
+            second.style.backgroundColor = picks.colorTwo
         }
    
 }
-
+console.log(picks)
+    console.log(Object.keys(picks).length)
 }
+
 
 
 // when the DOM loads
