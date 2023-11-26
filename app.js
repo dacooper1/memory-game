@@ -51,7 +51,8 @@ function createDivsForColors(colorArray) {
     // give it a class attribute for the value we are looping over
     newDiv.classList.add(color);
     newDiv.id = (uniqueId)
-    newDiv.style.backgroundColor = color
+    // Only to help me implement the handleCardClick function, will be removed
+    newDiv.innerText = color
 
     // call a function handleCardClick when a div is clicked on
     newDiv.addEventListener("click", handleCardClick);
@@ -62,8 +63,10 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!
 function handleCardClick(e) {
+    // using session storage to track attributes of card turned over
+    // have to reset session storage after length of 5 
+
  if (sessionStorage.length < 3){
-    // sessionStorage.setItem('targetOne', JSON.stringify(e.target))
     sessionStorage.setItem('colorOne', JSON.stringify(e.target.getAttribute('class')));
     sessionStorage.setItem  ('idOne', JSON.stringify(e.target.getAttribute('id')));
 
@@ -71,54 +74,25 @@ function handleCardClick(e) {
     // sessionStorage.setItem('targetTwo', JSON.stringify(e.target))
     sessionStorage.setItem('colorTwo', JSON.stringify(e.target.getAttribute('class')));
     sessionStorage.setItem('idTwo', JSON.stringify(e.target.getAttribute('id')));
+    let first =  document.getElementById(one);
+    let second = document.getElementById(sessionStorage.getItem('idTwo'))
+
         if (sessionStorage.getItem('colorOne') !== sessionStorage.getItem('colorTwo') || sessionStorage.getItem('idOne') == sessionStorage.getItem('idTwo')){
-            // setTimeout(function{
-            //     e.target
-            // })
-            
+            setTimeout(function(){
+                first.style.backgroundColor = (sessionStorage.getItem('colorOne'))
+                second.style.backgroundColor = (sessionStorage.getItem('colorTwo'))
+            }, 1000)
+              
+        } else if ((sessionStorage.getItem('colorOne') == sessionStorage.getItem('colorTwo') && sessionStorage.getItem('idOne') != sessionStorage.getItem('idTwo'))) {
+            // does not work, having trouble selecting DOM element using dymanic id#
+           first.style.backgroundColor = (sessionStorage.getItem('colorOne'))
+            second.style.backgroundColor = (sessionStorage.getItem('colorTwo'))
         }
    
 }
 
-
-console.log(sessionStorage)
-console.log(sessionStorage.length)
-
 }
 
-
-// sessionStorage.clear();
-// localStorage.setItem('pairs',JSON.stringify(data));
-
-// let localStorageLength = JSON.parse(localStorage.getItem('toDoList')).length
-
-// if (((JSON.parse(localStorage.getItem('toDoList'))[k]) === check)) {
-//     let updated = data.indexOf((JSON.parse(localStorage.getItem('toDoList'))[k]))
-//     data.splice(updated,1)
-//     localStorage.setItem('toDoList',JSON.stringify(data))    
-// }
-
-// if (turnedOver <= 2) {
-//     setTimeout(function(){
-//         event.target.style.backgroundColor = 'white'
-//         }, 2000) 
-    
-//     event.target.style.backgroundColor = event.target.getAttribute('class');
-//         if (turnedOver === 1) {
-//             let first = event.target
-//             colorOne = event.target.getAttribute('class')
-//             idOne = event.target.getAttribute('Id')
-//         } else if (turnedOver === 2) {
-//             let second = event.target
-//             colorTwo = event.target.getAttribute('class')
-//             idTwo = event.target.getAttribute('Id') 
-//         } 
-//         console.log(first)
-//         console.log(second)
-        
-       
-        
-//     }
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
