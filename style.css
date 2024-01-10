@@ -6,7 +6,8 @@
   display: inline-block;  
 }
 
-.color{
-  background-color: white;
-  visibility: hidden;
+#game #reset {
+  font-size: 40px;
+  color: white;
+  background-color: black;
 }

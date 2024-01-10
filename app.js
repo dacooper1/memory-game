@@ -1,16 +1,23 @@
 const gameContainer = document.getElementById("game");
 
+let card1 = null;
+let card2 = null;
+let cardsMatched = 0;
+let selected = false;
+
 const COLORS = [
   "red",
   "blue",
   "green",
   "orange",
   "purple",
+  "pink",
   "red",
   "blue",
   "green",
   "orange",
-  "purple"
+  "purple",
+  "pink"
 ];
 
 // here is a helper function to shuffle an array
@@ -60,37 +67,78 @@ function createDivsForColors(colorArray) {
     gameContainer.append(newDiv);
   }
 }
- let picks = {};
+ 
 
 // TODO: Implement this function!
-function handleCardClick(e) {
-    e.target.style.backgroundColor = e.target.getAttribute('class')
-    console.log(e.target.getAttribute('class'))
-    
- if (Object.keys(picks).length == 0){
-    picks.colorOne = (e.target.getAttribute('class'))
-    picks.idOne = (e.target.getAttribute('id'))
-} else if (Object.keys(picks).length > 2 <5) {
-    picks.colorTwo = (e.target.getAttribute('class'))
-    picks.idTwo = (e.target.getAttribute('id'))
-    let first =  document.getElementById(picks.idOne);
-    let second = document.getElementById(picks.idTwo)
+let flipped = document.querySelectorAll('.flipped')
+let matched = document.querySelectorAll('.matched');
 
-        if (picks.colorOne !== picks.colorTwo || picks.idOne == picks.idTwo){
-            setTimeout(function(){
-                first.style.backgroundColor = 'white'
-                second.style.backgroundColor = 'white'
-            }, 1000)
-              
-        } else if (picks.colorOne == picks.     colorTwo && picks.idOne != picks.idTwo) {
-           first.style.backgroundColor = picks.colorOne
-            second.style.backgroundColor = picks.colorTwo
-        }
-   
+let check1 = undefined;
+let check2 = undefined;
+
+function handleCardClick(e) {
+  if (selected) return;
+  if ((e.target.classList[1]) === "flipped")return;
+  e.target.classList.add('flipped')
+  e.target.style.backgroundColor = e.target.classList[0]
+
+  if (!card1) {
+  card1 = e.target
+  check1 = card1.classList[0]
+  console.log('one' + check1)
+  } else {
+    card2 = e.target
+    check2 = card2.classList[0]
+    selected = true
+    console.log('two' + check2)
+    if (check1 === check2 && card1.id != card2.id) {
+      card1.classList.add('matched')
+      card2.classList.add('matched')
+      cardsMatched += 2
+      card1 = null;
+      card2 = null;
+      setTimeout(function(){
+        selected = false
+      }, 500)
+    } else if (check1 !== check2){
+      setTimeout(function(){
+      card1.style.backgroundColor = 'white';
+      card2.style.backgroundColor = 'white';
+      card1.classList.remove('flipped')
+      card2.classList.remove('flipped')
+      card1 = null;
+      card2 = null;
+      selected = false
+      },1000)
+      console.log('no match')
+    }
+  }
+   gameOver();
 }
-console.log(picks)
-    console.log(Object.keys(picks).length)
-}
+
+let resetButton = document.createElement('button')
+
+function gameOver(){
+ if (cardsMatched === COLORS.length) {
+    resetButton.innerText = "PLAY AGAIN"
+    resetButton.id = 'reset'
+    gameContainer.append(resetButton)
+    }
+   }
+
+
+ function resetGame(){
+  document.location.reload()
+    }
+
+resetButton.addEventListener("click",function(){
+  resetGame();
+    })
+
+
+
+
+    
 
 
 
